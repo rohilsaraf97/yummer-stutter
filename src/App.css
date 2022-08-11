@@ -5,11 +5,20 @@
 @tailwind utilities;
 
 @layer components {
-  .recipeform_input label {
-    @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+  .recipeform_input {
+    @apply flex flex-col items-start lg:flex-row lg:items-center justify-between gap-5 my-3;
   }
 
-  .recipeform_input input {
-    @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
+  .recipeform_input label {
+    @apply block tracking-wide text-gray-700 text-lg font-bold;
+  }
+
+  .recipeform_input input,
+  textarea {
+    @apply appearance-none block w-full lg:w-[70%] bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
+  }
+
+  .recipeform_input textarea {
+    @apply h-[25vh];
   }
 }

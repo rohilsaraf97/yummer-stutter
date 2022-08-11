@@ -12,7 +12,7 @@ const loggedInItems = [
   },
   {
     title: "Add new",
-    href: "/recipes/new",
+    href: "/addrecipe",
   },
 ];
 
@@ -51,14 +51,20 @@ const NavbarList = ({
           <Link className="mr-3 flex-none md:w-auto" to="/">
             <span className="sr-only">Yummybite home page</span>
             <h1 className="font-curvy text-xl lg:text-2xl">
-              <span className="text-xl lg:text-3xl">🍩</span> Yummy bites
+              <span className="text-2xl lg:text-4xl">🍩</span> Yummy bites
             </h1>
           </Link>
           <div className="relative hidden lg:flex items-center ml-auto">
             <nav className="text-sm leading-6 font-semibold text-slate-700">
               <ul className="flex space-x-8">
                 {items.map((item, index) => {
-                  return <NavbarItem title={item.title} href={item.href} />;
+                  return (
+                    <NavbarItem
+                      title={item.title}
+                      href={item.href}
+                      key={index}
+                    />
+                  );
                 })}
                 {isAuth && (
                   <li>
