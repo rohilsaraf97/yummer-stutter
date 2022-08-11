@@ -5,6 +5,9 @@
 @tailwind utilities;
 
 @layer components {
+  body {
+    @apply bg-gray-100;
+  }
   .recipeform_input {
     @apply flex flex-col items-start lg:flex-row lg:items-center justify-between gap-5 my-3;
   }
@@ -20,5 +23,29 @@
 
   .recipeform_input textarea {
     @apply h-[25vh];
+  }
+}
+.spinner {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.spinner:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid lightblue;
+  border-color: lightblue transparent lightblue transparent;
+  animation: spinner 1.2s linear infinite;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
-import RecipeForm from "./components/Recipe/RecipeForm";
+import AddRecipe from "./pages/AddRecipe";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PrivateRoutes from "./PrivateRoutes";
@@ -24,7 +24,7 @@ const App = () => {
         />
 
         <Route element={<PrivateRoutes isAuth={isAuth} />}>
-          <Route path="/addrecipe" element={<RecipeForm />} />
+          <Route path="/addrecipe" element={<AddRecipe />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/recipes" replace />} />

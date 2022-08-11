@@ -46,7 +46,7 @@ const NavbarList = ({
   };
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="py-4 border-b  lg:px-8 lg:py-3 lg:border-0 mx-4 lg:mx-0">
+      <div className="py-4 border-b  lg:px-8 lg:py-3 lg:border-0 mx-4 lg:mx-3">
         <div className="relative flex items-center">
           <Link className="mr-3 flex-none md:w-auto" to="/">
             <span className="sr-only">Yummybite home page</span>

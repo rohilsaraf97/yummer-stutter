@@ -19,7 +19,7 @@ const Login = ({
 
   return (
     <div className="max-w-6xl mx-auto flex items-center justify-center h-[80vh]">
-      <div className="shadow-lg rounded-lg bg-gray-100 p-10 flex flex-col ">
+      <div className="shadow-lg rounded-lg bg-white p-10 flex flex-col ">
         <h2 className="text-2xl">🍩 Sign in to continue</h2>
         <button
           onClick={loginHandler}
