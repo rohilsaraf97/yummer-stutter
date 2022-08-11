@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import useHttp from "../../hooks/use-http";
 import { addRecipe } from "../../lib/api";
+import LoadingSpinner from "../LoadingSpinner";
 
 interface inputType {
   title: string;
@@ -90,11 +91,10 @@ const RecipeForm = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-10">
-      <div className="flex flex-col bg-gray-100 shadow-lg rounded-lg mx-10">
+      <div className="flex flex-col bg-white shadow-lg rounded-lg mx-10">
         <div className="p-10">
           <h1 className=" border-b-black text-3xl font-poppins font-bold  text-center">
             Add your own Recipe!
-            {status === "pending" && "Loading"}
           </h1>
         </div>
         <div className="lg:mx-auto w-full my-10">
@@ -162,12 +162,18 @@ const RecipeForm = () => {
                 onChange={directionsChangeHandler}
               />
             </div>
-            <button
-              type="submit"
-              className="self-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 mt-10 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-            >
-              Add Recipe
-            </button>
+            {status === "pending" ? (
+              <div className="max-w-6xl mx-auto my-10 text-center flex items-center justify-center">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className="self-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 mt-10 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+              >
+                Add Recipe
+              </button>
+            )}
           </form>
         </div>
       </div>
