@@ -7,7 +7,6 @@ const cheesecakeImage = require("./../../assets/cheesecake.jpg");
 
 const RecipeList = () => {
   const { sendRequest, status, data, error } = useHttp(getRecipes, true);
-  const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
     sendRequest();
@@ -30,10 +29,8 @@ const RecipeList = () => {
         {data.map((recipe: any) => {
           return (
             <RecipeCard
-              title={recipe.title}
-              duration={recipe.cookTime}
-              image={cheesecakeImage}
-              author={recipe.author.name}
+              recipe={{ ...recipe, image: cheesecakeImage }}
+              key={recipe.id}
             />
           );
         })}

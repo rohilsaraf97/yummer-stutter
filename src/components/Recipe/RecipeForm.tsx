@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import useHttp from "../../hooks/use-http";
-import { addRecipe } from "../../lib/api";
+import { addRecipe, editRecipeById } from "../../lib/api";
 import LoadingSpinner from "../utils/LoadingSpinner";
 
 interface inputType {
+  id?: string;
   title: string;
   prepTime: string;
   cookTime: string;
@@ -14,18 +15,14 @@ interface inputType {
   directions: string;
 }
 
-const initialInput: inputType = {
-  title: "",
-  prepTime: "",
-  cookTime: "",
-  ingredients: "",
-  image: {},
-  directions: "",
-};
-
-const RecipeForm = () => {
-  const [input, setInput] = useState(initialInput);
-
+const RecipeForm = ({
+  update,
+  recipe,
+}: {
+  update: boolean;
+  recipe: inputType;
+}) => {
+  const [input, setInput] = useState(recipe);
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput((prev) => {
       return { ...prev, title: e.target.value };
@@ -68,26 +65,62 @@ const RecipeForm = () => {
   const navigate = useNavigate();
   const { sendRequest, status, data, error } = useHttp(addRecipe);
 
+  const { sendRequest: sendEditRequest, status: editStatus } =
+    useHttp(editRecipeById);
+
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendRequest({
-      ...{
-        ...input,
-        ingredients: input.ingredients.split("\n"),
-        directions: input.directions.split("\n"),
-      },
-      author: {
-        name: auth.currentUser?.displayName,
-        uid: auth.currentUser?.uid,
-      },
-    });
+
+    if (update) {
+      console.log("insubmit handler");
+      console.log({
+        id: recipe.id,
+        data: {
+          ...{
+            ...input,
+            ingredients: input.ingredients.split("\n"),
+            directions: input.directions.split("\n"),
+          },
+          author: {
+            name: auth.currentUser?.displayName,
+            uid: auth.currentUser?.uid,
+          },
+        },
+      });
+
+      sendEditRequest({
+        id: input.id,
+        data: {
+          ...{
+            ...input,
+            ingredients: input.ingredients.split("\n"),
+            directions: input.directions.split("\n"),
+          },
+          author: {
+            name: auth.currentUser?.displayName,
+            uid: auth.currentUser?.uid,
+          },
+        },
+      });
+    } else
+      sendRequest({
+        ...{
+          ...input,
+          ingredients: input.ingredients.split("\n"),
+          directions: input.directions.split("\n"),
+        },
+        author: {
+          name: auth.currentUser?.displayName,
+          uid: auth.currentUser?.uid,
+        },
+      });
   };
 
   useEffect(() => {
-    if (status === "completed") {
+    if (status === "completed" || editStatus === "completed") {
       navigate("/recipes");
     }
-  }, [status]);
+  }, [status, editStatus]);
 
   return (
     <div className="max-w-6xl mx-auto my-10">
@@ -176,7 +209,7 @@ const RecipeForm = () => {
                 type="submit"
                 className="self-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 mt-10 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
               >
-                Add Recipe
+                {update ? "Update" : "Add"} Recipe
               </button>
             )}
           </form>
