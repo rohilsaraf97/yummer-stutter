@@ -44,7 +44,7 @@ const NavbarList = () => {
               <span className="text-2xl lg:text-4xl">🍩</span> Yummy bites
             </h1>
           </Link>
-          <div className="relative hidden lg:flex items-center ml-auto">
+          <div className="relative flex items-center ml-auto">
             <nav className="text-sm leading-6 font-semibold text-slate-700">
               <ul className="flex space-x-8">
                 {items.map((item, index) => {
