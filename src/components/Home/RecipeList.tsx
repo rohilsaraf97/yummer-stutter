@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useHttp from "../../hooks/use-http";
 import { getRecipes } from "../../lib/api";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "../utils/LoadingSpinner";
 import RecipeCard from "./RecipeCard";
 const cheesecakeImage = require("./../../assets/cheesecake.jpg");
 

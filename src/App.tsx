@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
-import AddRecipe from "./pages/AddRecipe";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
+import AddRecipe from "./components/pages/AddRecipe";
+import Home from "./components/pages/Home";
+import Login from "./components/pages/Login";
 import PrivateRoutes from "./PrivateRoutes";
 
 const App = () => {

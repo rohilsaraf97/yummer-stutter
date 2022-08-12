@@ -11,7 +11,7 @@ const loggedInItems = [
     href: "/recipes",
   },
   {
-    title: "Add new",
+    title: "New Recipe",
     href: "/addrecipe",
   },
 ];

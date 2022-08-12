@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import useHttp from "../../hooks/use-http";
 import { addRecipe } from "../../lib/api";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "../utils/LoadingSpinner";
 
 interface inputType {
   title: string;
@@ -91,8 +91,8 @@ const RecipeForm = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-10">
-      <div className="flex flex-col bg-white shadow-lg rounded-lg mx-10">
-        <div className="p-10">
+      <div className="flex flex-col bg-white shadow-lg rounded-lg mx-10 overflow-hidden">
+        <div className="p-10 bg-blue-50">
           <h1 className=" border-b-black text-3xl font-poppins font-bold  text-center">
             Add your own Recipe!
           </h1>

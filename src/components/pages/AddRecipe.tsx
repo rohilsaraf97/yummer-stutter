@@ -1,5 +1,5 @@
 import React from "react";
-import RecipeForm from "../components/Recipe/RecipeForm";
+import RecipeForm from "../Recipe/RecipeForm";
 
 const AddRecipe = () => {
   return <RecipeForm />;

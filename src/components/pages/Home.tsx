@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/Home/Header";
-import RecipeList from "../components/Home/RecipeList";
+import Header from "../Home/Header";
+import RecipeList from "../Home/RecipeList";
 
 const Home = () => {
   return (
