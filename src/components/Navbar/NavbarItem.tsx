@@ -8,7 +8,7 @@ const NavbarItem = ({ href, title }: { href: string; title: string }) => {
         className={({ isActive }) =>
           isActive
             ? "text-sky-500 font-poppins text-lg"
-            : "hover:text-sky-500 font-poppins text-lg"
+            : "hover:text-sky-500 font-poppins text-lg text-black"
         }
         to={href}
       >

@@ -6,7 +6,7 @@ const initialInput = {
   prepTime: "",
   cookTime: "",
   ingredients: "",
-  image: {},
+  image: "",
   directions: "",
 };
 

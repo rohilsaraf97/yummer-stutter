@@ -59,7 +59,7 @@ const NavbarList = () => {
                 {authCtx.auth && (
                   <li>
                     <button
-                      className="hover:text-sky-500 font-poppins text-lg"
+                      className="hover:text-sky-500 font-poppins text-lg text-black"
                       onClick={signUserOut}
                     >
                       Logout

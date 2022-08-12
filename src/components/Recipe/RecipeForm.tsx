@@ -4,6 +4,8 @@ import { auth } from "../../config/firebase";
 import useHttp from "../../hooks/use-http";
 import { addRecipe, editRecipeById } from "../../lib/api";
 import LoadingSpinner from "../utils/LoadingSpinner";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "./../../config/firebase";
 
 interface inputType {
   id?: string;
@@ -11,7 +13,7 @@ interface inputType {
   prepTime: string;
   cookTime: string;
   ingredients: string;
-  image: object;
+  image: string;
   directions: string;
 }
 
@@ -23,6 +25,8 @@ const RecipeForm = ({
   recipe: inputType;
 }) => {
   const [input, setInput] = useState(recipe);
+  const [enabled, setEnabled] = useState(true);
+
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput((prev) => {
       return { ...prev, title: e.target.value };
@@ -55,11 +59,31 @@ const RecipeForm = ({
     });
   };
 
-  const imageChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput((prev) => {
-      if (e.target.files) return { ...prev, image: e.target.files[0] };
-      return { ...prev, image: {} };
-    });
+  const imageChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    let file;
+    if (e.target.files) file = e.target.files[0];
+    if (!file) return;
+    const storageRef = ref(storage, `/files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    setEnabled(false);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+      },
+      (err) => console.log(err),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log("url", url);
+          setInput((prev) => {
+            return { ...prev, image: url };
+          });
+          setEnabled(true);
+        });
+      }
+    );
   };
 
   const navigate = useNavigate();
@@ -127,7 +151,7 @@ const RecipeForm = ({
       <div className="flex flex-col bg-white shadow-lg rounded-lg mx-10 overflow-hidden">
         <div className="p-10 bg-blue-50">
           <h1 className=" border-b-black text-3xl font-poppins font-bold  text-center">
-            Add your own Recipe!
+            {update ? "Update your" : "Add your own"} Recipe!
           </h1>
         </div>
         <div className="lg:mx-auto w-full my-10">
@@ -168,7 +192,7 @@ const RecipeForm = ({
                 required
               />
             </div>
-            {/* <div className="recipeform_input">
+            <div className="recipeform_input">
               <label htmlFor="image">Image</label>
               <input
                 id="image"
@@ -176,7 +200,7 @@ const RecipeForm = ({
                 accept="image/*"
                 onChange={imageChangeHandler}
               />
-            </div> */}
+            </div>
             <p className="text-sm font-bold font-poppins">
               Add every step in a new line
             </p>
@@ -200,14 +224,18 @@ const RecipeForm = ({
                 required
               />
             </div>
-            {status === "pending" ? (
+            {status === "pending" || editStatus === "pending" ? (
               <div className="max-w-6xl mx-auto my-10 text-center flex items-center justify-center">
                 <LoadingSpinner />
               </div>
             ) : (
               <button
                 type="submit"
-                className="self-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 mt-10 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                className={`${
+                  !enabled &&
+                  "bg-gray-700 cursor-not-allowed hover:bg-bg-gray-700"
+                } self-center text-white border border-sky-200 bg-sky-500 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 mt-10`}
+                disabled={!enabled}
               >
                 {update ? "Update" : "Add"} Recipe
               </button>

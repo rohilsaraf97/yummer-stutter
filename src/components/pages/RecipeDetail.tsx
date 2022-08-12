@@ -6,8 +6,6 @@ import LoadingSpinner from "../utils/LoadingSpinner";
 import AuthContext from "../../store/Auth/auth-context";
 import { auth } from "../../config/firebase";
 
-const cheesecake = require("../../assets/cheesecake.jpg");
-
 const Recipe = () => {
   const { sendRequest, status, data, error } = useHttp(getRecipeById, true);
   const params = useParams();
@@ -43,7 +41,7 @@ const Recipe = () => {
     <div className="max-w-6xl mx-auto">
       <div className="max-w-6xl mx-10 my-10 rounded-lg shadow-md overflow-hidden bg-white">
         <img
-          src={cheesecake}
+          src={foundRecipe.image}
           alt=""
           className="max-h-[60vh] w-full object-cover"
         />
@@ -69,8 +67,18 @@ const Recipe = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-6 p-10 ">
-          <div className="col-span-4">
+        <div className="lg:grid grid-cols-7 p-10 ">
+          <div className="col-span-3 self-start sticky top-10 lg:mr-6 bg-blue-50 px-4 py-4 mb-10 rounded-md shadow-md">
+            <h2 className="text-2xl font-poppins mb-3 ">Ingredients</h2>
+            <ol className="list-inside list-disc space-y-3">
+              {foundRecipe.ingredients.map(
+                (direction: string, index: number) => {
+                  return <li key={index}>{direction}</li>;
+                }
+              )}
+            </ol>
+          </div>
+          <div className="col-span-4 py-4">
             <h2 className="text-2xl font-poppins mb-3">Directions</h2>
             <ol className="list-inside list-decimal space-y-5">
               {foundRecipe.directions.map(
@@ -83,19 +91,9 @@ const Recipe = () => {
               {foundRecipe.title} is ready!
             </h2>
           </div>
-          <div className="col-span-2 self-start sticky top-10 ml-6 bg-blue-50 px-4 py-2 rounded-md shadow-md">
-            <h2 className="text-2xl font-poppins ">Ingredients</h2>
-            <ol className="list-inside list-disc">
-              {foundRecipe.ingredients.map(
-                (direction: string, index: number) => {
-                  return <li key={index}>{direction}</li>;
-                }
-              )}
-            </ol>
-          </div>
         </div>
         {authCtx.auth && auth?.currentUser?.uid === foundRecipe.author.uid && (
-          <div className="flex gap-3 p-10 items-center justify-end">
+          <div className="flex gap-3 p-10 items-center justify-center lg:justify-end">
             <button
               className="rounded-md text-white font-poppins px-3 py-2 bg-red-500"
               onClick={() => deleteHandler(foundRecipe.id)}

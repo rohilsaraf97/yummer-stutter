@@ -4,6 +4,7 @@ import RecipeForm from "../Recipe/RecipeForm";
 import useHttp from "../../hooks/use-http";
 import { getRecipeById } from "../../lib/api";
 import { auth } from "../../config/firebase";
+import LoadingSpinner from "../utils/LoadingSpinner";
 
 const UpdateRecipe = () => {
   const { sendRequest, status, data, error } = useHttp(getRecipeById, true);
@@ -21,7 +22,9 @@ const UpdateRecipe = () => {
   }, [status]);
 
   return status === "pending" ? (
-    <div>loading</div>
+    <div className="max-w-6xl mx-auto my-10 text-center flex items-center justify-center h-[90vh]">
+      <LoadingSpinner />
+    </div>
   ) : (
     <RecipeForm
       update={true}

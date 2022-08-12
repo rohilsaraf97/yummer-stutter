@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../../store/Auth/auth-context";
+import { auth } from "../../config/firebase";
 
 const cheesecakeImage = require("./../../assets/cheesecake.jpg");
 
 const Header = () => {
+  const authCtx = useContext(AuthContext);
   return (
     <div className="">
       <div className="flex flex-col md:flex-row items-stretch my-10 mx-10 align-start rounded-lg shadow-lg overflow-hidden ">
@@ -10,9 +13,14 @@ const Header = () => {
           <img src={cheesecakeImage} alt="" />
         </div>
         <div className="bg-sky-100 p-4 flex flex-col justify-center gap-2 lg:max-w-[40%]">
-          <p className="italic text-sm">Lorem ipsum dolor sit amet</p>
+          {authCtx.auth && (
+            <h2 className="font-poppins text-4xl font-bold">
+              Hello, {auth?.currentUser?.displayName}!
+            </h2>
+          )}
+          <p className="italic text-sm font-poppins">Check out this delicacy</p>
           <h2 className="font-poppins text-3xl font-bold">
-            Lorem, ipsum dolor sit amet consectetur adipisicin
+            Berry Cheesecake, the dish of the Month!
           </h2>
           <div className="text-md">
             <p>
