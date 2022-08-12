@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import AuthContext from "../../store/Auth/auth-context";
 import { auth } from "../../config/firebase";
+import { Link } from "react-router-dom";
 
 const cheesecakeImage = require("./../../assets/cheesecake.jpg");
 
 const Header = () => {
   const authCtx = useContext(AuthContext);
   return (
-    <div className="">
+    <Link to="/recipe/QEDzH5lR8oJNbB8cQ82l">
       <div className="flex flex-col md:flex-row items-stretch my-10 mx-10 align-start rounded-lg shadow-lg overflow-hidden ">
         <div>
           <img src={cheesecakeImage} alt="" />
@@ -31,7 +32,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
