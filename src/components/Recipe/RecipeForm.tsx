@@ -110,6 +110,7 @@ const RecipeForm = () => {
                 placeholder="Ex: Sweet Corn Soup"
                 value={input.title}
                 onChange={titleChangeHandler}
+                required
               />
             </div>
             <div className="recipeform_input">
@@ -120,6 +121,7 @@ const RecipeForm = () => {
                 placeholder="Ex: 20"
                 value={input.prepTime}
                 onChange={prepChangeHandler}
+                required
               />
             </div>
             <div className="recipeform_input">
@@ -130,6 +132,7 @@ const RecipeForm = () => {
                 placeholder="Ex: 40"
                 value={input.cookTime}
                 onChange={cookChangeHandler}
+                required
               />
             </div>
             {/* <div className="recipeform_input">
@@ -151,6 +154,7 @@ const RecipeForm = () => {
                 placeholder=""
                 value={input.ingredients}
                 onChange={ingredientsChangeHandler}
+                required
               />
             </div>
             <div className="recipeform_input">
@@ -160,6 +164,7 @@ const RecipeForm = () => {
                 placeholder=""
                 value={input.directions}
                 onChange={directionsChangeHandler}
+                required
               />
             </div>
             {status === "pending" ? (

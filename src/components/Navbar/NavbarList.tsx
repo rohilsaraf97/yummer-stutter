@@ -1,9 +1,8 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import NavbarItem from "./NavbarItem";
-import { signOut } from "firebase/auth";
-import { auth } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../store/Auth/auth-context";
 
 const loggedInItems = [
   {
@@ -27,22 +26,13 @@ const loggedOutItems = [
   },
 ];
 
-const NavbarList = ({
-  isAuth,
-  setAuth,
-}: {
-  isAuth: boolean;
-  setAuth: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  const items = isAuth ? loggedInItems : loggedOutItems;
+const NavbarList = () => {
   const navigate = useNavigate();
-
+  const authCtx = useContext(AuthContext);
+  const items = authCtx.auth ? loggedInItems : loggedOutItems;
   const signUserOut = () => {
-    signOut(auth).then(() => {
-      localStorage.clear();
-      setAuth(false);
-      navigate("/login");
-    });
+    authCtx.logOut();
+    navigate("/login");
   };
   return (
     <div className="max-w-6xl mx-auto">
@@ -66,7 +56,7 @@ const NavbarList = ({
                     />
                   );
                 })}
-                {isAuth && (
+                {authCtx.auth && (
                   <li>
                     <button
                       className="hover:text-sky-500 font-poppins text-lg"
